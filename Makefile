@@ -1,5 +1,5 @@
 # Necessities:
-NAME := minitalk
+NAME := client server
 
 LIBFT := ft
 LFT_DIR := libft
@@ -19,3 +19,18 @@ INCLUDES:= $(addprefix -I, $(INC))
 # Compiler:
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -g3 $(INCLUDES) -L$(LFT_DIR) -l$(LIBFT)
+
+# Rules:
+all: $(NAME)
+
+$(NAME): $(SRV_SRCS) $(CLT_SRCS) $(INCLUDES)
+	@make -C $(LFT_DIR) re
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRV_SRCS) -o server
+	$(CC) $(CFLAGS) $(INCLUDES) $(CLT_SRCS) -o client
+
+clean:
+	@make -C $(LFT_DIR) clean
+
+fclean:
+	@make -C $(LFT_DIR) fclean
+	rm -rf $(NAME)
