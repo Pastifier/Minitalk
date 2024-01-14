@@ -7,7 +7,7 @@ LFT_DIR := libft
 SRC_DIR := srcs
 INC_DIR := includes
 
-INC := $(LFT_DIR)/$(INC_DIR)/libft.h $(INC_DIR)/minitalk.h
+INC := $(LFT_DIR)/$(INC_DIR)/libft.h $(INC_DIR)/minitalk.h $(INC_DIR)/stdlog.h
 SRV_SRC := main.c
 CLT_SRC := main.c
 SRV_SRCS:= $(addprefix $(SRC_DIR)/server/, $(SRV_SRC))
