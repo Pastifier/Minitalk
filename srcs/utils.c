@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/14 09:28:26 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/14 16:40:44 by ebinjama         ###   ########.fr       */
+/*   Created: 2024/01/14 09:59:21 by ebinjama          #+#    #+#             */
+/*   Updated: 2024/01/14 16:20:04 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/minitalk.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <stdint.h>
-# include <signal.h>
-# include <stdbool.h>
-# include "../libft/includes/libft.h"
-# include "stdlog.h"
+void	werror(const char *error_message)
+{
+	short	i;
 
-typedef struct sigaction t_sig;
-
-/*----RECEIVER----*/
-# define CHR 0
-# define FOUND_ONE 1
-# define CHR_COUNT 2
-# define CPID 3
-# define HELLO "hello"
-
-#endif // !MINITALK_H
+	ft_putstr_fd(RED, STDERR_FILENO);
+	ft_putendl_fd((char *)error_message, STDERR_FILENO);
+	ft_putstr_fd("Aborting", STDERR_FILENO);
+	i = -1;
+	while (++i < 3)
+	{
+		ft_putchar_fd('.', STDERR_FILENO);
+		usleep(500000);
+	}
+	ft_putendl_fd(DEF, STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
