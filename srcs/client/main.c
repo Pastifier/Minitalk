@@ -6,7 +6,7 @@
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:57:10 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/14 16:59:40 by ebinjama         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:01:01 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int c, char *v[])
 void	send_bits(pid_t pid, const char *message)
 {
 	short	i;
-
+	(void)pid; // For now
 	if (!*message)
 		return ;
 	while (*message)
@@ -34,11 +34,13 @@ void	send_bits(pid_t pid, const char *message)
 		while (++i <= 7)
 		{
 			if (((*message << i) & 1) == 0)
-				if (kill(pid, SIGUSR1) == -1)
-					werror(BAD_SIGNAL);
+				ft_putendl_fd("0", STDOUT_FILENO);
+				//if (kill(pid, SIGUSR1) == -1)
+				//	werror(BAD_SIGNAL);
 			if (((*message << i) & 1) == 1)
-				if (kill(pid, SIGUSR2) == -1)
-					werror(BAD_SIGNAL);
+				ft_putendl_fd("1", STDOUT_FILENO);
+				//if (kill(pid, SIGUSR2) == -1)
+				//	werror(BAD_SIGNAL);
 			usleep(150);
 		}
 		++message;

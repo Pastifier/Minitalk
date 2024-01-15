@@ -6,7 +6,7 @@
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:32:23 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/14 10:06:18 by ebinjama         ###   ########.fr       */
+/*   Updated: 2024/01/15 10:31:01 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define BAD_SIGNAL "Error: BAD SIGNAL"
 # define BAD_INPUT "Input must be valid, habibi."
-# define EASTER_EGG "You tryna crash your device habibi?"
+# define EASTER_EGG "You tryna crash the device, habibi?"
 # define BAD_FORMAT "Format:\n\t./client [PID] [message]"
 
 void	werror(const char *error_message);

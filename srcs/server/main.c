@@ -22,6 +22,7 @@ int	main(void)
 {
 	struct sigaction	sa;
 
+	ft_putnbr_fd(g_receiver[FOUND_ONE], STDOUT_FILENO);
 	ft_putendl_fd(ft_itoa((int)getpid()), STDOUT_FILENO);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_handler = NULL;
@@ -39,8 +40,12 @@ void	off_handler(void)
 {
 	ft_putchar_fd('0', STDOUT_FILENO);
 	g_receiver[CHR_COUNT] += 1;
-	if (g_receiver[CHR_COUNT] == 7)
+	if (g_receiver[CHR_COUNT] == 7 && g_receiver[FOUND_ONE] == 1)
+	{
 		ft_putchar_fd(g_receiver[CHR], STDOUT_FILENO);
+		g_receiver[FOUND_ONE] = 0;
+		g_receiver[CHR] = 0;
+	}
 }
 
 void	on_handler(void)
@@ -50,7 +55,10 @@ void	on_handler(void)
 	g_receiver[CHR_COUNT] += 1;
 	g_receiver[FOUND_ONE] = 1;
 	if (g_receiver[CHR_COUNT] == 7)
+	{
 		ft_putchar_fd(g_receiver[CHR], STDOUT_FILENO);
+		g_receiver[CHR] = 0;
+	}
 }
 
 void	sig_handler(int sig, siginfo_t *info, void *context)
