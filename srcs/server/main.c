@@ -12,61 +12,60 @@
 
 #include "../includes/minitalk.h"
 
-static volatile int	g_receiver[4] = { 0 };
-
-static void	off_handler(void);
-static void	on_handler(void);
+static void	off_handler(pid_t, volatile t_sigchar *);
+static void	on_handler(pid_t, volatile t_sigchar *);
 static void	sig_handler(int, siginfo_t *, void *);
 
-int	main(void)
+int main(void)
 {
-	struct sigaction	sa;
+	struct sigaction sa;
 
-	ft_putnbr_fd(g_receiver[FOUND_ONE], STDOUT_FILENO);
 	ft_putendl_fd(ft_itoa((int)getpid()), STDOUT_FILENO);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_handler = NULL;
 	sa.sa_sigaction = sig_handler;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-		werror(BAD_SIGNAL);
-	if (sigaction(SIGUSR2, &sa, NULL) == -1)
-		werror(BAD_SIGNAL);
+	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
+		werror(BAD_SETUP);
 	while (true)
-		;
+		pause();
 	return (0);
 }
 
-void	off_handler(void)
+void off_handler(pid_t cpid, volatile t_sigchar *sc)
 {
-	ft_putchar_fd('0', STDOUT_FILENO);
-	g_receiver[CHR_COUNT] += 1;
-	if (g_receiver[CHR_COUNT] == 7 && g_receiver[FOUND_ONE] == 1)
+	(void)cpid;
+	sc->bit_counter = (sc->bit_counter + 1);
+	if (sc->bit_counter == 7 && sc->flag == 1)
 	{
-		ft_putchar_fd(g_receiver[CHR], STDOUT_FILENO);
-		g_receiver[FOUND_ONE] = 0;
-		g_receiver[CHR] = 0;
+		ft_putchar_fd(sc->character, STDOUT_FILENO);
+		sc->flag = 0;
+		sc->character = 0;
+		sc->bit_counter = 0;
 	}
 }
 
-void	on_handler(void)
+void on_handler(pid_t cpid, volatile t_sigchar *sc)
 {
-	ft_putchar_fd('1', STDOUT_FILENO);
-	g_receiver[CHR] += (1 << g_receiver[CHR_COUNT]);
-	g_receiver[CHR_COUNT] += 1;
-	g_receiver[FOUND_ONE] = 1;
-	if (g_receiver[CHR_COUNT] == 7)
+	(void)cpid;
+	sc->character += (1 << sc->bit_counter);
+	sc->bit_counter = (sc->bit_counter + 1);
+	sc->flag = 1;
+	if (sc->bit_counter == 7)
 	{
-		ft_putchar_fd(g_receiver[CHR], STDOUT_FILENO);
-		g_receiver[CHR] = 0;
+		ft_putchar_fd(sc->character, STDOUT_FILENO);
+		sc->character = 0;
+		sc->bit_counter = 0;
+		sc->flag = 0;
 	}
 }
 
-void	sig_handler(int sig, siginfo_t *info, void *context)
+void sig_handler(int sig, siginfo_t *info, void *context)
 {
+	static volatile t_sigchar	sc;
+
 	(void)context;
-	g_receiver[CPID] = (int)(info->si_pid);
 	if (sig == SIGUSR1)
-		off_handler();
+		on_handler(info->si_pid, &sc);
 	else if (sig == SIGUSR2)
-		on_handler();
+		off_handler(info->si_pid, &sc);
 }

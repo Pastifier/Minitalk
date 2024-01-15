@@ -6,7 +6,7 @@
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:28:26 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/14 16:40:44 by ebinjama         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:17:29 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,17 @@ typedef struct sigaction t_sig;
 /*----RECEIVER----*/
 # define CHR 0
 # define FOUND_ONE 1
-# define CHR_COUNT 2
+# define BIT_COUNT 2
 # define CPID 3
-# define HELLO "hello"
 
+/*---STRUCT(S?)---*/
+
+// Always declare as static
+// to make use of auto-initialisation.
+typedef struct s_sigchar
+{
+	volatile unsigned char	character;
+	volatile short			bit_counter;
+	volatile bool			flag;
+} t_sigchar;
 #endif // !MINITALK_H
