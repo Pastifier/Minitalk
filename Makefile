@@ -8,7 +8,7 @@ SRC_DIR	:= srcs
 INC_DIR	:= includes
 
 INCX	:= $(LFT_DIR)/$(INC_DIR)/libft.h 
-INCXX	:= minitalk.h
+INCXX	:= minitalk.h stdlog.h
 INCXXX	:= $(addprefix $(INC_DIR)/, $(INCXX))
 INC		:= $(LFT_DIR)/$(INC_DIR) $(INC_DIR)
 SRV_SRC	:= main.c
