@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:57:10 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/15 17:23:11 by ebinjama         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:52:34 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	send_bits(pid_t pid, const char *message)
 {
 	short	i;
 
-	if (!*message)
-		return ;
 	while (*message)
 	{
 		i = -1;
@@ -35,21 +33,18 @@ void	send_bits(pid_t pid, const char *message)
 		{
 			if (((*message >> i) & 1))
 			{
-				if (kill(pid, SIGUSR1) == -1)
+				if (kill(pid, SIGUSR2) == -1)
 					werror(BAD_SIGNAL);
 			}
-			else if (kill(pid, SIGUSR2) == -1)
+			else if (kill(pid, SIGUSR1) == -1)
 				werror(BAD_SIGNAL);
 			usleep(200);
 		}
 		++message;
 	}
-	while (++i <= 14)
-		if (kill(pid, SIGUSR1) == -1)
-			werror(BAD_SIGNAL);
 }
 
-void validate_input(int c, char *v[])
+void	validate_input(int c, char *v[])
 {
 	if (c != 3)
 		werror(BAD_FORMAT);

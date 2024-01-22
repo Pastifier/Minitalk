@@ -7,12 +7,11 @@ LFT_DIR	:= libft
 SRC_DIR	:= srcs
 INC_DIR	:= includes
 
-INCX	:= $(LFT_DIR)/$(INC_DIR)/libft.h 
-INCXX	:= minitalk.h stdlog.h
-INCXXX	:= $(addprefix $(INC_DIR)/, $(INCXX))
+INCX	:= minitalk.h stdlog.h
+INCXX	:= $(addprefix $(INC_DIR)/, $(INCXX))
 INC		:= $(LFT_DIR)/$(INC_DIR) $(INC_DIR)
-SRV_SRC	:= main.c
-CLT_SRC	:= main.c
+SRV_SRC	:= server.c
+CLT_SRC	:= client.c
 SRC		:= utils.c
 SRCS	:= $(addprefix $(SRC_DIR)/, $(SRC))
 SRV_SRCS:= $(addprefix $(SRC_DIR)/server/, $(SRV_SRC))
@@ -28,10 +27,14 @@ CFLAGS	:= -Wall -Wextra -Werror -g3 -L$(LFT_DIR) -l$(LIBFT)
 # Rules:
 all: $(NAME)
 
-$(NAME): $(INCX) $(INCXXX) $(SRV_SRCS) $(CLT_SRCS) $(SRCS)
+$(NAME): $(INCXX) $(SRV_SRCS) $(CLT_SRCS) $(SRCS)
 	@make -C $(LFT_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) $(SRV_SRCS) $(SRCS) -o server
 	$(CC) $(CFLAGS) $(INCLUDES) $(CLT_SRCS) $(SRCS) -o client
+
+bonus: $(INCXX) $(SRV_BNUS) $(CLT_BNUS) $(SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRV_BNUS) $(SRCS) -o server
+	$(CC) $(CFLAGS) $(INCLUDES) $(CLT_BNUS) $(SRCS) -o client
 
 clean:
 	@make -C $(LFT_DIR) clean
@@ -42,4 +45,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
