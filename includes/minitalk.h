@@ -6,7 +6,7 @@
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:28:26 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/22 16:48:23 by ebinjama         ###   ########.fr       */
+/*   Updated: 2024/01/23 20:59:46 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@
 # include "../libft/includes/libft.h"
 # include "stdlog.h"
 
-typedef struct sigaction	t_sig;
+# define TRY_SPOT 1
+# define SRV_INFO 0
 
-/*----RECEIVER----*/
 # define CHR 0
-# define FOUND_ONE 1
-# define BIT_COUNT 2
-# define CPID 3
+# define COUNT 1
 
-typedef struct sigaction	t_sigaction;
+typedef volatile __CHAR32_TYPE__	t_univ;
+typedef struct sigaction			t_sigaction;
+
+void	wflush(const char *errmsg, pid_t cpid, void *c, void *i);
+void	werror(const char *errmsg);
 
 #endif // !MINITALK_H

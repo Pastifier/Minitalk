@@ -6,7 +6,7 @@
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:32:23 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/22 17:18:13 by ebinjama         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:51:00 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define MESSAGE_SENT GRN"Message recieved by server"DEF
 # define UNKNOWN_SERVER "Received communication from unknown source"
 # define SERVER_TIMEOUT "Server took too long."
+# define LOST_COMM "Lost communication with client of PID: "
+# define MAX_TRIES 3
 
 void	werror(const char *error_message);
 #endif // !STDLOG_H

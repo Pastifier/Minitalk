@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebinjama <ebinjama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/21 21:34:08 by ebinjama          #+#    #+#             */
-/*   Updated: 2024/01/22 17:22:38y ebinjama         ###   ########.fr       */
+/*   Created: 2024/01/23 20:56:08 by ebinjama          #+#    #+#             */
+/*   Updated: 2024/01/23 21:03:23 by ebinjama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	send_bits(pid_t pid, const char *message)
 			}
 			else if (kill(pid, SIGUSR1) == -1)
 				werror(BAD_SIGNAL);
-			if (usleep(500) == 0)
-				werror(SERVER_TIMEOUT);
+			usleep(200);
 		}
 		++message;
 	}
@@ -56,27 +55,21 @@ void	sig_handler(int sig, siginfo_t *info, void *context)
 {
 	(void)context;
 	(void)info;
-	//if ((sig == SIGUSR1 || sig == SIGUSR2) && info->si_pid != g_spid.value)
-	//	return (werror(UNKNOWN_SERVER));
-	if (sig == SIGUSR1)
-		return ;
 	if (sig == SIGUSR2)
 		ft_putendl_fd(MESSAGE_SENT, STDOUT_FILENO);
 }
 
 void	init_program(int c, char *v[], t_sigaction *sa)
 {
-	g_spid = ft_atoi(v[1]);
 	if (c != 3)
 		werror(BAD_FORMAT);
+	g_spid = ft_atoi(v[1]);
 	if (g_spid.error)
 		werror(BAD_INPUT);
 	if (g_spid.value <= 0)
 		werror(EASTER_EGG);
 	sa->sa_flags = SA_SIGINFO;
 	sa->sa_sigaction = sig_handler;
-	if (sigaction(SIGUSR1, sa, NULL) == -1)
-		werror(BAD_SIGNAL);
 	if (sigaction(SIGUSR2, sa, NULL) == -1)
 		werror(BAD_SIGNAL);
 }
@@ -90,7 +83,7 @@ void	send_null(pid_t spid)
 	{
 		if (kill(spid, SIGUSR1) == -1)
 			werror(BAD_SIGNAL);
-		if (usleep(500) == 0)
-			werror(SERVER_TIMEOUT);
+		usleep(200);
 	}
+	usleep(20000);
 }

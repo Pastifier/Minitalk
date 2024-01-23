@@ -33,8 +33,9 @@ $(NAME): $(INCXX) $(SRV_SRCS) $(CLT_SRCS) $(SRCS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(CLT_SRCS) $(SRCS) -o client
 
 bonus: $(INCXX) $(SRV_BNUS) $(CLT_BNUS) $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(SRV_BNUS) $(SRCS) -o server
-	$(CC) $(CFLAGS) $(INCLUDES) $(CLT_BNUS) $(SRCS) -o client
+	@make -C $(LFT_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRV_BNUS) $(SRCS) -o server_bonus
+	$(CC) $(CFLAGS) $(INCLUDES) $(CLT_BNUS) $(SRCS) -o client_bonus
 
 clean:
 	@make -C $(LFT_DIR) clean
@@ -42,6 +43,7 @@ clean:
 fclean:
 	@make -C $(LFT_DIR) fclean
 	rm -rf $(NAME)
+	rm -rf $(addsuffix _bonus, $(NAME))
 
 re: fclean all
 
